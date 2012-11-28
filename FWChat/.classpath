@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/lib/Citizens.jar"/>
+	<classpathentry kind="lib" path="C:/lib/Factions.jar"/>
+	<classpathentry kind="lib" path="C:/lib/necessity/craftbukkit 1.2.jar"/>
+	<classpathentry kind="lib" path="C:/lib/TagAPI.jar"/>
+	<classpathentry kind="lib" path="C:/lib/denizen-0.75-SNAPSHOT.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

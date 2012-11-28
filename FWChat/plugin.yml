@@ -1,0 +1,44 @@
+name: FWChat
+main: com.pqqqqq.fwchat.FWChat
+version: 1.0
+author: Pqqqqq
+description: Chat system
+commands:
+  e:
+    description: Toggles "empire" chat mode
+    usage: /<command>
+    aliases: [empire]
+  ooc:
+    description: Toggles "OOC" chat mode
+    usage: /<command>
+    aliases: [global,g]
+  fwchat:
+    description: Main cmd
+    usage: /<command>
+  loc:
+    description: Toggle local chat
+    usage: /<command>
+  list:
+    description: Displays people in certain groups
+    aliases: [who, players, playerlist]
+    usage: /<command> [group]
+  word:
+    description: Function for word editing
+    usage: /<command> <add|list|remove/del/delete> [word]
+  chat:
+    description: Checks what chat the user is in
+    usage: /<command> [name]
+  lookup:
+    description: Lists information about a player
+    usage: /<command> <player>
+    aliases: [whois, details, detail, player]
+  a:
+    description: Admin chat
+    usage: /<command> [message]
+  g:
+    description: Group chat command
+    aliases: [group, group, gr]
+    usage: /<command> help
+  date:
+    description: Gets the date
+    usage: /<command>
