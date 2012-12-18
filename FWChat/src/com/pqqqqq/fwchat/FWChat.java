@@ -645,7 +645,7 @@ public class FWChat extends JavaPlugin {
 					add.sendMessage(ChatColor.GREEN + "You have been demoted to member inside your group!");
 					player.sendMessage(ChatColor.GREEN + "You have demoted " + ChatColor.GOLD + add.getName() + ChatColor.GREEN + " to member!");
 					return true;
-				} else if (args[0].equalsIgnoreCase("tp") || args[0].equalsIgnoreCase("tele")) {
+				}/* else if (args[0].equalsIgnoreCase("tp") || args[0].equalsIgnoreCase("tele")) {
 					if (args.length <= 1)
 						return false;
 
@@ -772,7 +772,7 @@ public class FWChat extends JavaPlugin {
 
 					player.sendMessage(ChatColor.RED + "You don't have a request to decline!");
 					return true;
-				} else if (args[0].equalsIgnoreCase("list")) {
+				}*/ else if (args[0].equalsIgnoreCase("list")) {
 					Group mine = groups.getGroup(player);
 
 					if (mine == null) {
