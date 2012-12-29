@@ -24,13 +24,20 @@ public class Utils {
 		return implode(args.toArray(new String[args.size()]), connect);
 	}
 
-	public static String integrateColour(String str) {
+	public static String integrateColour(String str, boolean magic) {
 		for (ChatColor c : ChatColor.values()) {
-			str = str.replaceAll(
-					"&" + c.getChar() + "|&"
-							+ Character.toUpperCase(c.getChar()), c.toString());
+			char ch = c.getChar();
+
+			if (!magic && (ch == 'k' || ch == 'l' || ch == 'n' || ch == 'o' || ch == 'm'))
+				continue;
+
+			str = str.replaceAll("&" + c.getChar() + "|&" + Character.toUpperCase(c.getChar()), c.toString());
 		}
 		return str;
+	}
+	
+	public static String integrateColour(String str) {
+		return integrateColour(str, true);
 	}
 
 	public static String generateString(char[] acChars, int length) {

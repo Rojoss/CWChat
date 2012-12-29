@@ -297,8 +297,8 @@ public class ChatPlayerListener implements Listener {
 			format = format.replace("{NAME}", Utils.integrateColour(player.getName())).trim();
 			format = format.replace(
 					"{MESSAGE}",
-					(player.hasPermission("fwChat.colour") || player.hasPermission("fwChat.*") || player.isOp() ? Utils.integrateColour(message)
-							: message)).trim();
+					(player.hasPermission("fwChat.colour") || player.hasPermission("fwChat.*") || player.isOp() ? Utils.integrateColour(message,
+							player.hasPermission("fwchat.special") || player.isOp()) : message)).trim();
 			// format = format.replace("%", "#").trim(); */
 
 			if (fFormat != null) {
