@@ -35,7 +35,7 @@ public class Utils {
 		}
 		return str;
 	}
-	
+
 	public static String integrateColour(String str) {
 		return integrateColour(str, true);
 	}

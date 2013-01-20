@@ -10,8 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class ConfigUtil {
 
-	public static String getString(YamlConfiguration cfg, File file,
-			String path, String def) {
+	public static String getString(YamlConfiguration cfg, File file, String path, String def) {
 		try {
 			if (!cfg.isSet(path)) {
 				cfg.set(path, def);
@@ -25,8 +24,7 @@ public class ConfigUtil {
 		return null;
 	}
 
-	public static int getInt(YamlConfiguration cfg, File file, String path,
-			int def) {
+	public static int getInt(YamlConfiguration cfg, File file, String path, int def) {
 		try {
 			if (!cfg.isSet(path)) {
 				cfg.set(path, def);
@@ -40,8 +38,7 @@ public class ConfigUtil {
 		return -1;
 	}
 
-	public static float getFloat(YamlConfiguration cfg, File file, String path,
-			float def) {
+	public static float getFloat(YamlConfiguration cfg, File file, String path, float def) {
 		try {
 			if (!cfg.isSet(path)) {
 				cfg.set(path, def);
@@ -55,8 +52,7 @@ public class ConfigUtil {
 		return -1;
 	}
 
-	public static boolean getBoolean(YamlConfiguration cfg, File file,
-			String path, boolean def) {
+	public static boolean getBoolean(YamlConfiguration cfg, File file, String path, boolean def) {
 		try {
 			if (!cfg.isSet(path)) {
 				cfg.set(path, def);
@@ -69,13 +65,11 @@ public class ConfigUtil {
 		}
 		return false;
 	}
-	
-	public static List<String> getStringList(YamlConfiguration cfg, File file,
-			String path, String... def) {
+
+	public static List<String> getStringList(YamlConfiguration cfg, File file, String path, String... def) {
 		try {
 			if (!cfg.isSet(path)) {
-				cfg.set(path,
-						(List<String>) new ArrayList<String>(Arrays.asList(def)));
+				cfg.set(path, (List<String>) new ArrayList<String>(Arrays.asList(def)));
 				cfg.save(file);
 				return new ArrayList<String>(Arrays.asList(def));
 			}

@@ -1,18 +1,17 @@
 package com.pqqqqq.fwchat.wrappers;
 
 public class ChatPrefix extends Object {
-	private String prefixName;
-	private String chatPrefix;
-	private String chatSuffix;
-	private String permissionNode;
-	private boolean owner;
+	private String	prefixName;
+	private String	chatPrefix;
+	private String	chatSuffix;
+	private String	permissionNode;
+	private boolean	owner;
 
 	public ChatPrefix(String prefixName) {
 		this.prefixName = prefixName;
 	}
 
-	public ChatPrefix(String prefixName, String chatPrefix, String chatSuffix,
-			String permissionNode, boolean owner) {
+	public ChatPrefix(String prefixName, String chatPrefix, String chatSuffix, String permissionNode, boolean owner) {
 		this.prefixName = prefixName;
 		this.chatPrefix = chatPrefix;
 		this.chatSuffix = chatSuffix;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 
 public class Groups {
-	private final ArrayList<Group> groups = new ArrayList<Group>();
+	private final ArrayList<Group>	groups	= new ArrayList<Group>();
 
 	public void addGroup(Group group) {
 		groups.add(group);
@@ -38,7 +38,7 @@ public class Groups {
 		}
 		return null;
 	}
-	
+
 	public boolean hasGroup(Player member) {
 		return getGroup(member) != null;
 	}

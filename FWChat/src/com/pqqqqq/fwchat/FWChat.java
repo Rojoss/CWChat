@@ -710,7 +710,7 @@ public class FWChat extends JavaPlugin {
 						}
 					}).start();
 					return true;
-				} else if (args[0].equalsIgnoreCase("tpaccept")) {
+					} else if (args[0].equalsIgnoreCase("tpaccept")) {
 					for (Map.Entry<Player, Player> entry : tps.entrySet()) {
 						if (entry.getValue().equals(player)) {
 							final Player tele = entry.getKey();
@@ -758,7 +758,7 @@ public class FWChat extends JavaPlugin {
 
 					player.sendMessage(ChatColor.RED + "You don't have a request to accept!");
 					return true;
-				} else if (args[0].equalsIgnoreCase("tpdecline") || args[0].equalsIgnoreCase("tpdeny")) {
+					} else if (args[0].equalsIgnoreCase("tpdecline") || args[0].equalsIgnoreCase("tpdeny")) {
 					for (Map.Entry<Player, Player> entry : tps.entrySet()) {
 						if (entry.getValue().equals(player)) {
 							tps.remove(entry.getKey());
@@ -771,7 +771,7 @@ public class FWChat extends JavaPlugin {
 
 					player.sendMessage(ChatColor.RED + "You don't have a request to decline!");
 					return true;
-				}*/ else if (args[0].equalsIgnoreCase("list")) {
+					}*/else if (args[0].equalsIgnoreCase("list")) {
 					Group mine = groups.getGroup(player);
 
 					if (mine == null) {
