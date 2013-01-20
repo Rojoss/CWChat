@@ -226,6 +226,15 @@ public class ChatPlayerListener implements Listener {
 				}
 			}
 
+			if (player.hasPermission("fwChat.owner") || player.isOp()) {
+				String custom = PrefixConfig.customPrefixes.get(player.getName().toLowerCase());
+
+				if (custom != null) {
+					prefixes.clear();
+					prefixes.add(custom);
+				}
+			}
+
 			if (!player.hasPermission("fwChat.bypass-link-block") && !player.hasPermission("fwChat.*")) {
 				String ne = "";
 				words: for (String word : message.split(" ")) {
