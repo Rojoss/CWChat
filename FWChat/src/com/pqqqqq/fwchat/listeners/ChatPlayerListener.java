@@ -216,7 +216,6 @@ public class ChatPlayerListener implements Listener {
 				suffixes.add(dP.getChatSuffix());
 			for (ChatPrefix cP : PrefixConfig.prefixes) {
 				if (player.hasPermission("fwChat.*") || player.hasPermission("*") || player.isOp() || player.hasPermission(cP.getPermissionNode())) {
-
 					if (player.hasPermission("fwChat.owner") && !cP.isOwner())
 						continue;
 
@@ -238,7 +237,7 @@ public class ChatPlayerListener implements Listener {
 					for (String allowed : MainConfig.allowedLinks) {
 						allowed = allowed.replace("http://", "").replace("https://", "");
 						String tWord = word.replace("http://", "").replace("https://", "");
-						if (allowed.equalsIgnoreCase(tWord)) {
+						if (tWord.toLowerCase().startsWith(allowed.toLowerCase())) {
 							ne += word + " ";
 							continue words;
 						}
