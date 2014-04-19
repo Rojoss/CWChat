@@ -88,7 +88,7 @@ public class ChatPlayerListener implements Listener {
 			}
 
 			if (player.hasPermission("fwchat.owner") || player.isOp()) {
-				String custom = PrefixConfig.customPrefixes.get(player.getName().toLowerCase());
+				String custom = PrefixConfig.customPrefixes.get(player.getUniqueId());
 
 				if (custom != null) {
 					prefixes.clear();

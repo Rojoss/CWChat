@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import net.clashwars.cwchat.util.Utils;
 import net.clashwars.cwchat.wrappers.ChatPrefix;
@@ -16,7 +17,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class PrefixConfig extends Config {
 	public static ChatPrefix			defPrefix;
 	public static ArrayList<ChatPrefix>	prefixes		= new ArrayList<ChatPrefix>();
-	public static Map<String, String>	customPrefixes	= new HashMap<String, String>();
+	public static Map<UUID, String>	customPrefixes	= new HashMap<UUID, String>();
 
 	private YamlConfiguration			cfg;
 	private File						dir				= new File("plugins" + File.separator + "CWChat" + File.separator);
@@ -63,11 +64,11 @@ public class PrefixConfig extends Config {
 				cfg.save(file);
 			}
 
-			for (String p : cfg.getConfigurationSection("custom-prefixes").getKeys(false)) {
-				String name = ConfigUtil.getString(cfg, file, "custom-prefixes." + p, null);
+			for (String uuid : cfg.getConfigurationSection("custom-prefixes").getKeys(false)) {
+				String name = ConfigUtil.getString(cfg, file, "custom-prefixes." + uuid, null);
 
 				if (name != null) {
-					customPrefixes.put(p.toLowerCase(), Utils.integrateColour(name));
+					customPrefixes.put(UUID.fromString(uuid), Utils.integrateColour(name));
 				}
 			}
 		} catch (Exception e) {
