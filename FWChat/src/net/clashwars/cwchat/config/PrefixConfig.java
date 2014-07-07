@@ -18,6 +18,7 @@ public class PrefixConfig extends Config {
 	public static ChatPrefix			defPrefix;
 	public static ArrayList<ChatPrefix>	prefixes		= new ArrayList<ChatPrefix>();
 	public static Map<UUID, String>	customPrefixes	= new HashMap<UUID, String>();
+	
 
 	private YamlConfiguration			cfg;
 	private File						dir				= new File("plugins" + File.separator + "CWChat" + File.separator);

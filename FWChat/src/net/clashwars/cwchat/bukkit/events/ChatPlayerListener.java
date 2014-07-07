@@ -3,6 +3,7 @@ package net.clashwars.cwchat.bukkit.events;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import net.clashwars.cwchat.CWChat;
@@ -21,6 +22,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+
+import com.massivecraft.factions.Rel;
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.factions.entity.UPlayer;
 
 public class ChatPlayerListener implements Listener {
 	private CWChat							cwc;
@@ -47,10 +53,67 @@ public class ChatPlayerListener implements Listener {
 					if (recp == null || recp.equals(player))
 						continue;
 
-					if (!recp.hasPermission("fwchat.staffchat") && !recp.hasPermission("fwChat.*"))
+					if (!recp.hasPermission("cwchat.staffchat") && !recp.hasPermission("cwchat.*"))
 						event.getRecipients().remove(recp);
 				}
 			}
+			
+			/* Faction chat */
+			UPlayer fp = UPlayer.get(player);
+			Faction faction = fp.getFaction();
+			String fFormat = null;
+			
+			if (faction != null && cwc.factionC.contains(player.getName())) {
+			    fFormat = cwc.getFacFormat();
+
+			    event.getRecipients().clear();
+			    event.getRecipients().addAll(faction.getOnlinePlayers());
+			} else if (faction != null && cwc.allyC.contains(player.getName())) {
+			    fFormat = cwc.getAllyFormat();
+
+			    event.getRecipients().clear();
+			    event.getRecipients().addAll(faction.getOnlinePlayers());
+
+			    Map<String, Rel> wishes = faction.getRelationWishes();
+
+			    for (Map.Entry<String, Rel> entry : wishes.entrySet()) {
+			        Faction thisFaction = Faction.get(entry.getKey());
+
+			        if (thisFaction == null)
+			            continue;
+
+			        Rel relation = faction.getRelationTo(thisFaction, true);
+
+			        if (relation != Rel.ALLY)
+			            continue;
+
+			        event.getRecipients().addAll(thisFaction.getOnlinePlayers());
+			    }
+			} else if (faction != null && cwc.truceC.contains(player.getName())) {
+			    fFormat = cwc.getTruceFormat();
+
+			    event.getRecipients().clear();
+			    event.getRecipients().addAll(faction.getOnlinePlayers());
+
+			    Map<String, Rel> wishes = faction.getRelationWishes();
+
+			    for (Map.Entry<String, Rel> entry : wishes.entrySet()) {
+			        Faction thisFaction = Faction.get(entry.getKey());
+
+			        if (thisFaction == null)
+			            continue;
+
+			        Rel relation = faction.getRelationTo(thisFaction, true);
+
+			        if (relation != Rel.ALLY && relation != Rel.TRUCE)
+			            continue;
+
+			        event.getRecipients().addAll(thisFaction.getOnlinePlayers());
+			    }
+			}
+			
+			
+			
 			
 			/* Group chat */
 			if (cwc.getGroupChat().contains(player.getName())) {
@@ -67,7 +130,9 @@ public class ChatPlayerListener implements Listener {
 						event.getRecipients().remove(recp);
 				}
 			}
-
+			
+			
+			/* Prefix */
 			ChatPrefix dP = PrefixConfig.defPrefix;
 			ArrayList<String> prefixes = new ArrayList<String>();
 			ArrayList<String> suffixes = new ArrayList<String>();
@@ -76,8 +141,8 @@ public class ChatPlayerListener implements Listener {
 			if (dP.getChatSuffix() != null && !dP.getChatSuffix().trim().isEmpty())
 				suffixes.add(dP.getChatSuffix());
 			for (ChatPrefix cP : PrefixConfig.prefixes) {
-				if (player.hasPermission("fwchat.*") || player.hasPermission("*") || player.isOp() || player.hasPermission(cP.getPermissionNode())) {
-					if (player.hasPermission("fwchat.owner") && !cP.isOwner())
+				if (player.hasPermission("cwchat.*") || player.hasPermission("*") || player.isOp() || player.hasPermission(cP.getPermissionNode())) {
+					if (player.hasPermission("cwchat.owner") && !cP.isOwner())
 						continue;
 
 					if (cP.getChatPrefix() != null && !cP.getChatPrefix().trim().isEmpty())
@@ -87,7 +152,7 @@ public class ChatPlayerListener implements Listener {
 				}
 			}
 
-			if (player.hasPermission("fwchat.owner") || player.isOp()) {
+			if (player.hasPermission("cwchat.owner") || player.isOp()) {
 				String custom = PrefixConfig.customPrefixes.get(player.getUniqueId());
 
 				if (custom != null) {
@@ -96,7 +161,7 @@ public class ChatPlayerListener implements Listener {
 				}
 			}
 
-			if (!player.hasPermission("cwchat.bypasslinks") && !player.hasPermission("fwChat.*")) {
+			if (!player.hasPermission("cwchat.bypasslinks") && !player.hasPermission("cwchat.*")) {
 				String ne = "";
 				words: for (String word : message.split(" ")) {
 					if (!urlPattern.matcher(word).matches()) {
@@ -123,6 +188,8 @@ public class ChatPlayerListener implements Listener {
 				format = Utils.integrateColour(cwc.getAdminFormat());
 			} else if (cwc.getGroupChat().contains(player.getName())) {
 				format = Utils.integrateColour(cwc.getGroupFormat());
+			} else if (faction != null && fFormat != null) {
+				format = Utils.integrateColour(fFormat);
 			} else {
 				format = Utils.integrateColour(cwc.getFormat());
 			}
@@ -132,11 +199,63 @@ public class ChatPlayerListener implements Listener {
 			format = format.replace("{SUFFIX}", Utils.integrateColour(Utils.implodeOld(suffixes, " ").trim()));
 			format = format.replace("{DISPLAYNAME}", Utils.integrateColour(player.getDisplayName())).trim();
 			format = format.replace("{NAME}", Utils.integrateColour(player.getName())).trim();
+			if (faction != null)
+				format = format.replace("{FACTION}", Utils.integrateColour(faction.getName())).trim();
 			
 			format = format.replace(
 					"{MESSAGE}",
 					(player.hasPermission("cwchat.color") || player.hasPermission("cwchat.*") || player.isOp() ? Utils.integrateColour(message,
 							player.hasPermission("cwchat.format") || player.isOp()) : message)).trim();
+			
+			if (fFormat != null) {
+			    event.setCancelled(true);
+
+			    format = format.replace("[fac]", faction.getName());
+			    String rank = "";
+			    if (faction.getLeader().equals(fp)) {
+			    	rank = "**";
+			    } else if (faction.getUPlayersWhereRole(Rel.OFFICER).contains(fp)) {
+			    	rank = "*";
+			    } else if (faction.getUPlayersWhereRole(Rel.MEMBER).contains(fp)) {
+			    	rank = "-";
+			    } else if (faction.getUPlayersWhereRole(Rel.RECRUIT).contains(fp)) {
+			    	rank = "+";
+			    }
+			    format = format.replace("[rank]", rank);
+
+			    for (Player recp : event.getRecipients()) {
+			    	UPlayer rp = UPlayer.get(recp);
+			        Faction rfaction = rp == null ? null : rp.getFaction();
+
+			        if (rfaction == null) {
+			            recp.sendMessage(format.replace("%R", ChatColor.GRAY.toString()));
+			        } else {
+			            if (faction.equals(rfaction)) {
+			                recp.sendMessage(format.replace("%R", ChatColor.GREEN.toString()));
+			            } else {
+			                Rel relation = faction.getRelationTo(rfaction, true);
+			                switch (relation) {
+			                    case ALLY:
+			                        recp.sendMessage(format.replace("%R", ChatColor.DARK_PURPLE.toString()));
+			                        break;
+			                    case TRUCE:
+			                        recp.sendMessage(format.replace("%R", ChatColor.LIGHT_PURPLE.toString()));
+			                        break;
+			                    case ENEMY:
+			                        recp.sendMessage(format.replace("%R", ChatColor.RED.toString()));
+			                        break;
+			                    case NEUTRAL:
+			                        recp.sendMessage(format.replace("%R", ChatColor.GRAY.toString()));
+			                        break;
+								default:
+									break;
+			                }
+			            }
+			        }
+			    }
+			    return;
+			}
+			
 			event.setCancelled(true);
 			for (Player rec : event.getRecipients()) {
 				rec.sendMessage(format.trim());
@@ -202,5 +321,71 @@ public class ChatPlayerListener implements Listener {
 				}
 			}
 		}
+	}
+	
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void cmd(PlayerCommandPreprocessEvent event) {
+	    if (event.isCancelled())
+	        return;
+
+	    Player player = event.getPlayer();
+	    String message = event.getMessage();
+
+	    if (message.equalsIgnoreCase("/f c") || message.toLowerCase().startsWith("/f c ") || message.equalsIgnoreCase("/f chat") || message.toLowerCase().startsWith("/f chat ")) {
+	        event.setCancelled(true);
+
+	        if (!player.hasPermission("cwchat.factions.chat") && !player.isOp()) {
+	            player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &cInsufficient permissions!"));
+	            return;
+	        }
+
+	        String[] split = message.split(" ");
+
+	        if (split.length >= 3) {
+	            String arg = split[2];
+	            
+	            if (arg.equalsIgnoreCase("f") || arg.equalsIgnoreCase("fac") || arg.equalsIgnoreCase("faction")) {
+	                cwc.factionC.add(player.getName());
+	                cwc.allyC.remove(player.getName());
+	                cwc.truceC.remove(player.getName());
+	                player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &aFaction &6chat."));
+	                return;
+	            } else if (arg.equalsIgnoreCase("a") || arg.equalsIgnoreCase("ally")) {
+	            	cwc.factionC.remove(player.getName());
+	            	cwc.allyC.add(player.getName());
+	            	cwc.truceC.remove(player.getName());
+	                player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &5Ally &6chat."));
+	                return;
+	            } else if (arg.equalsIgnoreCase("t") || arg.equalsIgnoreCase("truce")) {
+	            	cwc.factionC.remove(player.getName());
+	            	cwc.allyC.remove(player.getName());
+	                cwc.truceC.add(player.getName());
+	                player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &dTruce &6chat."));
+	                return;
+	            } else if (arg.equalsIgnoreCase("p") || arg.equalsIgnoreCase("public") || arg.equalsIgnoreCase("g") || arg.equalsIgnoreCase("global")) {
+	            	cwc.factionC.remove(player.getName());
+	            	cwc.allyC.remove(player.getName());
+	            	cwc.truceC.remove(player.getName());
+	                player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &7Public &6chat."));
+	                return;
+	            }
+	        }
+
+	        if (cwc.factionC.contains(player.getName())) {
+	        	cwc.factionC.remove(player.getName());
+	        	cwc.allyC.add(player.getName());
+	        	player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &5Ally &6chat."));
+	        } else if (cwc.allyC.contains(player.getName())) {
+	        	cwc.allyC.remove(player.getName());
+	        	cwc.truceC.add(player.getName());
+	        	player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &dTruce &6chat."));
+	        } else if (cwc.truceC.contains(player.getName())) {
+	        	cwc.truceC.remove(player.getName());
+	        	player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &7Public &6chat."));
+	        } else {
+	        	cwc.factionC.add(player.getName());
+	        	player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &aFaction &6chat."));
+	        }
+	    }
 	}
 }

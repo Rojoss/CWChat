@@ -29,6 +29,9 @@ public class CWChat {
 	//private ArrayList<String>						spy				= new ArrayList<String>();
 	private ArrayList<String>						staffC			= new ArrayList<String>();
 	private ArrayList<String>						groupC			= new ArrayList<String>();
+	public ArrayList<String>						factionC		= new ArrayList<String>();
+	public ArrayList<String>						allyC			= new ArrayList<String>();
+	public ArrayList<String>						truceC			= new ArrayList<String>();
 	private List<String>							allowedLinks;
 	
 	private HashMap<String, ArrayList<Group>>	    invites			= new HashMap<String, ArrayList<Group>>();
@@ -38,6 +41,9 @@ public class CWChat {
 	private String									format;
 	private String									adminFormat;
 	private String									groupFormat;
+	private String									facFormat;
+	private String									allyFormat;
+	private String									truceFormat;
 	
 	private Groups									groups;
 	private Config									pcfg;
@@ -168,5 +174,29 @@ public class CWChat {
     
     public HashMap<String, ArrayList<Group>> getInvites() {
     	return invites;
+    }
+    
+    public void setFacFormat(String set) {
+    	this.facFormat = set;
+    }
+    
+    public String getFacFormat() {
+    	return facFormat;
+    }
+    
+    public void setAllyFormat(String set) {
+    	this.allyFormat = set;
+    }
+    
+    public String getAllyFormat() {
+    	return allyFormat;
+    }
+
+    public void setTruceFormat(String set) {
+    	this.truceFormat = set;
+    }
+    
+    public String getTruceFormat() {
+    	return truceFormat;
     }
 }

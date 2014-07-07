@@ -34,9 +34,12 @@ public class MainConfig extends Config {
 		try {
 			cfg.load(file);
 
-			cwc.setFormat(ConfigUtil.getString(cfg, file, "chat-format-default", "{PREFIX} {DISPLAYNAME}: {SUFFIX} {MESSAGE}"));
-			cwc.setAdminFormat(ConfigUtil.getString(cfg, file, "chat-format-admin", "{PREFIX} {DISPLAYNAME}: {SUFFIX} {MESSAGE}"));
-			cwc.setGroupFormat(ConfigUtil.getString(cfg, file, "chat-format-groups", "{PREFIX} {DISPLAYNAME}: {SUFFIX} {MESSAGE}"));
+			cwc.setFormat(ConfigUtil.getString(cfg, file, "chat-format.default", "{PREFIX} {DISPLAYNAME}: {SUFFIX} {MESSAGE}"));
+			cwc.setAdminFormat(ConfigUtil.getString(cfg, file, "chat-format.admin", "{PREFIX} {DISPLAYNAME}: {SUFFIX} {MESSAGE}"));
+			cwc.setGroupFormat(ConfigUtil.getString(cfg, file, "chat-format.groups", "{PREFIX} {DISPLAYNAME}: {SUFFIX} {MESSAGE}"));
+			cwc.setFacFormat(ConfigUtil.getString(cfg, file, "chat-format.factions.faction", "{FACTION} {PREFIX} {DISPLAYNAME}: {SUFFIX} {MESSAGE}"));
+			cwc.setAllyFormat(ConfigUtil.getString(cfg, file, "chat-format.factions.ally", "{FACTION} {PREFIX} {DISPLAYNAME}: {SUFFIX} {MESSAGE}"));
+			cwc.setTruceFormat(ConfigUtil.getString(cfg, file, "chat-format.factions.truce", "{FACTION} {PREFIX} {DISPLAYNAME}: {SUFFIX} {MESSAGE}"));
 			cwc.setAllowedLinks(ConfigUtil.getStringList(cfg, file, "links.allowed-links", "clashwars.net"));
 
 			cwc.setGroupsEnabled(ConfigUtil.getBoolean(cfg, file, "groups.enablegroups", false));
