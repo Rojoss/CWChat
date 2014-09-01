@@ -7,6 +7,10 @@ import org.bukkit.ChatColor;
 
 public class Utils {
 
+	public static String formatMsg(String msg) {
+		return integrateColour("&8[&4CW Chat&8] &6" + msg);
+	}
+	
 	public static String[] trimFirst(String[] args) {
         String[] ret = new String[args.length - 1];
 
@@ -58,20 +62,27 @@ public class Utils {
 	}
 	
 
-	public static String integrateColour(String str, boolean magic) {
+	
+	public static String integrateColor(String str, boolean format, boolean magic) {
+		char ch;
 		for (ChatColor c : ChatColor.values()) {
-			char ch = c.getChar();
-
-			if (!magic && (ch == 'k' || ch == 'l' || ch == 'n' || ch == 'o' || ch == 'm'))
+			ch = c.getChar();
+			
+			if (!format && (ch == 'k' || ch == 'l' || ch == 'n' || ch == 'o' || ch == 'm' || ch == 'K' || ch == 'L' || ch == 'N' || ch == 'O' || ch == 'M')) {
 				continue;
-
-			str = str.replaceAll("&" + c.getChar() + "|&" + Character.toUpperCase(c.getChar()), c.toString());
+			}
+			
+			if (!magic && (ch == 'k' || ch == 'K')) {
+				continue;
+			}
+			
+			str = str.replaceAll("&" + ch + "|&" + Character.toUpperCase(ch), c.toString());
 		}
 		return str;
 	}
 
 	public static String integrateColour(String str) {
-		return integrateColour(str, true);
+		return integrateColor(str, true, true);
 	}
 
 	public static String generateString(char[] acChars, int length) {

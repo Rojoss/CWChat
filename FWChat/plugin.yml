@@ -7,11 +7,6 @@ commands:
   cwchat:
     description: Reload configurations
     usage: /<command>
-  list:
-    description: Displays people in certain groups
-    aliases: [who, players, playerlist]
-    usage: /<command> [all]
-    aliases: [staff, online]
   a:
     description: Admin chat
     usage: /<command> [message]
@@ -20,7 +15,3 @@ commands:
     description: Group chat command
     aliases: [group, group, gr]
     usage: /<command> help
-  msg:
-    description: Send a private message to a player
-    aliases: [message, tell]
-    usage: /<command> <player> <msg>
