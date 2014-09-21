@@ -1,0 +1,16 @@
+main : com.clashwars.cwchat.CWChat
+name: ${project.artifactId}
+version: ${project.version}
+description: ${project.description}
+commands:
+  cwchat:
+    description: Reload configurations
+    usage: /<command>
+  a:
+    description: Admin chat
+    usage: /<command> [message]
+    aliases: [s]
+  g:
+    description: Group chat command
+    aliases: [group, group, gr]
+    usage: /<command> help
