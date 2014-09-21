@@ -1,4 +1,4 @@
-package net.clashwars.cwchat.util;
+package com.clashwars.cwchat.util;
 
 import org.bukkit.ChatColor;
 

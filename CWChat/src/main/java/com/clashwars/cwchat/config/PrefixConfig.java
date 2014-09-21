@@ -1,7 +1,7 @@
-package net.clashwars.cwchat.config;
+package com.clashwars.cwchat.config;
 
-import net.clashwars.cwchat.util.Utils;
-import net.clashwars.cwchat.wrappers.ChatPrefix;
+import com.clashwars.cwchat.util.Utils;
+import com.clashwars.cwchat.wrappers.ChatPrefix;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 

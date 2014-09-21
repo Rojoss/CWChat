@@ -1,4 +1,4 @@
-package net.clashwars.cwchat.wrappers;
+package com.clashwars.cwchat.wrappers;
 
 public class ChatPrefix extends Object {
     private String prefixName;

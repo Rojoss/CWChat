@@ -1,10 +1,10 @@
-package net.clashwars.cwchat;
+package com.clashwars.cwchat;
 
-import net.clashwars.cwchat.events.ChatPlayerListener;
-import net.clashwars.cwchat.commands.Commands;
-import net.clashwars.cwchat.config.Config;
-import net.clashwars.cwchat.config.PrefixConfig;
-import net.clashwars.cwchat.wrappers.ChatType;
+import com.clashwars.cwchat.events.ChatPlayerListener;
+import com.clashwars.cwchat.commands.Commands;
+import com.clashwars.cwchat.config.Config;
+import com.clashwars.cwchat.config.PrefixConfig;
+import com.clashwars.cwchat.wrappers.ChatType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

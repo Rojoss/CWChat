@@ -1,4 +1,4 @@
-package net.clashwars.cwchat.commands;
+package com.clashwars.cwchat.commands;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

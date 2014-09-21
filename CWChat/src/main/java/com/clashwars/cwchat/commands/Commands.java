@@ -1,8 +1,8 @@
-package net.clashwars.cwchat.commands;
+package com.clashwars.cwchat.commands;
 
-import net.clashwars.cwchat.CWChat;
-import net.clashwars.cwchat.util.Utils;
-import net.clashwars.cwchat.wrappers.ChatType;
+import com.clashwars.cwchat.CWChat;
+import com.clashwars.cwchat.util.Utils;
+import com.clashwars.cwchat.wrappers.ChatType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

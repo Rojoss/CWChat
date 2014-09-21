@@ -1,4 +1,4 @@
-package net.clashwars.cwchat.wrappers;
+package com.clashwars.cwchat.wrappers;
 
 import java.util.HashMap;
 import java.util.Map;

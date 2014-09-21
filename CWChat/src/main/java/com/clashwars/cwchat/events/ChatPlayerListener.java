@@ -1,11 +1,11 @@
-package net.clashwars.cwchat.events;
+package com.clashwars.cwchat.events;
 
 import com.massivecraft.factions.Rel;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.UPlayer;
-import net.clashwars.cwchat.CWChat;
-import net.clashwars.cwchat.util.Utils;
-import net.clashwars.cwchat.wrappers.ChatType;
+import com.clashwars.cwchat.CWChat;
+import com.clashwars.cwchat.util.Utils;
+import com.clashwars.cwchat.wrappers.ChatType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

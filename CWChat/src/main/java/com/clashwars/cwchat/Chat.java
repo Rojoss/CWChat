@@ -1,12 +1,12 @@
-package net.clashwars.cwchat;
+package com.clashwars.cwchat;
 
 import com.massivecraft.factions.Rel;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.UPlayer;
-import net.clashwars.cwchat.config.PrefixConfig;
-import net.clashwars.cwchat.util.Utils;
-import net.clashwars.cwchat.wrappers.ChatPrefix;
-import net.clashwars.cwchat.wrappers.ChatType;
+import com.clashwars.cwchat.config.PrefixConfig;
+import com.clashwars.cwchat.util.Utils;
+import com.clashwars.cwchat.wrappers.ChatPrefix;
+import com.clashwars.cwchat.wrappers.ChatType;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

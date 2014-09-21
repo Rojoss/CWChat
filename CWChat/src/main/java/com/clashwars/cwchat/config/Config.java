@@ -1,4 +1,4 @@
-package net.clashwars.cwchat.config;
+package com.clashwars.cwchat.config;
 
 public abstract class Config {
 
