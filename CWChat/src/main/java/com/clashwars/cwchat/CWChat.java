@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Logger;
 
-//Testing sourcecontrol...
 public class CWChat extends JavaPlugin {
     private static CWChat instance;
 
