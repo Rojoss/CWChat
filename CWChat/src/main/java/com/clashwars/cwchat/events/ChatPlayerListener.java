@@ -62,33 +62,35 @@ public class ChatPlayerListener implements Listener {
 
 
             //Factions chats
-            UPlayer fPlayer = UPlayer.get(player);
-            Faction faction = fPlayer.getFaction();
+            if (cwc.getFactions() != null) {
+                UPlayer fPlayer = UPlayer.get(player);
+                Faction faction = fPlayer.getFaction();
 
-            if (faction != null) {
-                //Faction chat
-                if (ct == ChatType.FACTION || ct == ChatType.ALLY || ct == ChatType.TRUCE) {
-                    event.getRecipients().clear();
-                    event.getRecipients().addAll(faction.getOnlinePlayers());
-                }
+                if (faction != null) {
+                    //Faction chat
+                    if (ct == ChatType.FACTION || ct == ChatType.ALLY || ct == ChatType.TRUCE) {
+                        event.getRecipients().clear();
+                        event.getRecipients().addAll(faction.getOnlinePlayers());
+                    }
 
-                //Ally & Truce chat
-                if (ct == ChatType.ALLY || ct == ChatType.TRUCE) {
+                    //Ally & Truce chat
+                    if (ct == ChatType.ALLY || ct == ChatType.TRUCE) {
 
-                    Map<String, Rel> wishes = faction.getRelationWishes();
+                        Map<String, Rel> wishes = faction.getRelationWishes();
 
-                    for (Map.Entry<String, Rel> entry : wishes.entrySet()) {
-                        Faction thisFaction = Faction.get(entry.getKey());
+                        for (Map.Entry<String, Rel> entry : wishes.entrySet()) {
+                            Faction thisFaction = Faction.get(entry.getKey());
 
-                        if (thisFaction == null)
-                            continue;
+                            if (thisFaction == null)
+                                continue;
 
-                        Rel relation = faction.getRelationTo(thisFaction, true);
+                            Rel relation = faction.getRelationTo(thisFaction, true);
 
-                        if (relation == Rel.TRUCE && ct == ChatType.TRUCE) {
-                            event.getRecipients().addAll(thisFaction.getOnlinePlayers());
-                        } else if (relation == Rel.ALLY && (ct == ChatType.TRUCE || ct == ChatType.ALLY)) {
-                            event.getRecipients().addAll(thisFaction.getOnlinePlayers());
+                            if (relation == Rel.TRUCE && ct == ChatType.TRUCE) {
+                                event.getRecipients().addAll(thisFaction.getOnlinePlayers());
+                            } else if (relation == Rel.ALLY && (ct == ChatType.TRUCE || ct == ChatType.ALLY)) {
+                                event.getRecipients().addAll(thisFaction.getOnlinePlayers());
+                            }
                         }
                     }
                 }
@@ -100,7 +102,7 @@ public class ChatPlayerListener implements Listener {
             for (Player rec : event.getRecipients()) {
                 rec.sendMessage(formattedMsg);
             }
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -133,6 +135,11 @@ public class ChatPlayerListener implements Listener {
 
             if (!player.hasPermission("cwchat.factions.chat") && !player.isOp()) {
                 player.sendMessage(Utils.formatMsg("&cInsufficient permissions!"));
+                return;
+            }
+
+            if (cwc.getFactions() == null) {
+                player.sendMessage(Utils.formatMsg("&cNo factions found."));
                 return;
             }
 

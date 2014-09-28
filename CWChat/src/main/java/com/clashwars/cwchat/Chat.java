@@ -70,23 +70,25 @@ public class Chat {
         syntax = syntax.replace("{DISPLAYNAME}", Utils.integrateColour(player.getDisplayName())).trim();
         syntax = syntax.replace("{NAME}", Utils.integrateColour(player.getName())).trim();
 
-        UPlayer fPlayer = UPlayer.get(player);
-        Faction faction = fPlayer.getFaction();
+        if (cwc.getFactions() != null) {
+            UPlayer fPlayer = UPlayer.get(player);
+            Faction faction = fPlayer.getFaction();
 
-        if (faction != null) {
-            //syntax = syntax.replace("{FACTION}", Utils.integrateColour(faction.getName())).trim();
-            syntax = syntax.replace("[fac]", Utils.integrateColour(faction.getName())).trim();
-            String rank = "";
-            if (faction.getLeader() != null && faction.getLeader().equals(fPlayer)) {
-                rank = "**";
-            } else if (faction.getUPlayersWhereRole(Rel.OFFICER).contains(fPlayer)) {
-                rank = "*";
-            } else if (faction.getUPlayersWhereRole(Rel.MEMBER).contains(fPlayer)) {
-                rank = "-";
-            } else if (faction.getUPlayersWhereRole(Rel.RECRUIT).contains(fPlayer)) {
-                rank = "+";
+            if (faction != null) {
+                //syntax = syntax.replace("{FACTION}", Utils.integrateColour(faction.getName())).trim();
+                syntax = syntax.replace("[fac]", Utils.integrateColour(faction.getName())).trim();
+                String rank = "";
+                if (faction.getLeader() != null && faction.getLeader().equals(fPlayer)) {
+                    rank = "**";
+                } else if (faction.getUPlayersWhereRole(Rel.OFFICER).contains(fPlayer)) {
+                    rank = "*";
+                } else if (faction.getUPlayersWhereRole(Rel.MEMBER).contains(fPlayer)) {
+                    rank = "-";
+                } else if (faction.getUPlayersWhereRole(Rel.RECRUIT).contains(fPlayer)) {
+                    rank = "+";
+                }
+                syntax = syntax.replace("[rank]", rank);
             }
-            syntax = syntax.replace("[rank]", rank);
         }
 		
 		

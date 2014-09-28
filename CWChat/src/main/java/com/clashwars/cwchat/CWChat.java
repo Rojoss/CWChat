@@ -5,10 +5,13 @@ import com.clashwars.cwchat.commands.Commands;
 import com.clashwars.cwchat.config.Config;
 import com.clashwars.cwchat.config.PrefixConfig;
 import com.clashwars.cwchat.wrappers.ChatType;
+import com.clashwars.cwcore.CWCore;
+import com.massivecraft.factions.Factions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,6 +21,8 @@ import java.util.logging.Logger;
 
 public class CWChat extends JavaPlugin {
     private static CWChat instance;
+    private CWCore cwcore;
+    private Factions factions;
 
     private Chat chat;
 
@@ -40,6 +45,15 @@ public class CWChat extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+
+        Plugin plugin = getServer().getPluginManager().getPlugin("CWCore");
+        if (plugin == null || !(plugin instanceof CWCore)) {
+            log("CWCore dependency couldn't be loaded!");
+            setEnabled(false);
+            return;
+        }
+        cwcore = (CWCore)plugin;
+        factions = cwcore.GetDM().getFactions();
 
         UUID uuid;
         for (Player player : getServer().getOnlinePlayers()) {
@@ -79,6 +93,10 @@ public class CWChat extends JavaPlugin {
 
 	
 	/* Getters & Setters */
+
+    public Factions getFactions() {
+        return factions;
+    }
 
     public Config getMainConfig() {
         return mcfg;
