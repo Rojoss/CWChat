@@ -1,10 +1,10 @@
 package com.clashwars.cwchat;
 
+import com.clashwars.cwcore.utils.CWUtil;
 import com.massivecraft.factions.Rel;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.UPlayer;
 import com.clashwars.cwchat.config.PrefixConfig;
-import com.clashwars.cwchat.util.Utils;
 import com.clashwars.cwchat.wrappers.ChatPrefix;
 import com.clashwars.cwchat.wrappers.ChatType;
 import org.bukkit.entity.Player;
@@ -63,12 +63,12 @@ public class Chat {
 		
 		
 		/* SYNTAX */
-        String syntax = Utils.integrateColour(chatType.getSyntax());
+        String syntax = CWUtil.integrateColor(chatType.getSyntax());
 
-        syntax = syntax.replace("{PREFIX}", Utils.integrateColour(Utils.implodeOld(prefixes, " ").trim()));
-        syntax = syntax.replace("{SUFFIX}", Utils.integrateColour(Utils.implodeOld(suffixes, " ").trim()));
-        syntax = syntax.replace("{DISPLAYNAME}", Utils.integrateColour(player.getDisplayName())).trim();
-        syntax = syntax.replace("{NAME}", Utils.integrateColour(player.getName())).trim();
+        syntax = syntax.replace("{PREFIX}", CWUtil.integrateColor(CWUtil.implode(prefixes, " ").trim()));
+        syntax = syntax.replace("{SUFFIX}", CWUtil.integrateColor(CWUtil.implode(suffixes, " ").trim()));
+        syntax = syntax.replace("{DISPLAYNAME}", CWUtil.integrateColor(player.getDisplayName())).trim();
+        syntax = syntax.replace("{NAME}", CWUtil.integrateColor(player.getName())).trim();
 
         if (cwc.getFactions() != null) {
             UPlayer fPlayer = UPlayer.get(player);
@@ -76,7 +76,7 @@ public class Chat {
 
             if (faction != null) {
                 //syntax = syntax.replace("{FACTION}", Utils.integrateColour(faction.getName())).trim();
-                syntax = syntax.replace("[fac]", Utils.integrateColour(faction.getName())).trim();
+                syntax = syntax.replace("[fac]", CWUtil.integrateColor(faction.getName())).trim();
                 String rank = "";
                 if (faction.getLeader() != null && faction.getLeader().equals(fPlayer)) {
                     rank = "**";
@@ -96,10 +96,10 @@ public class Chat {
 		
 		/* COLORED AND FORMATED CHAT */
         if (player.isOp() || player.hasPermission("cwchat.*")) {
-            syntax = syntax.replace("{MESSAGE}", Utils.integrateColor(message, true, true)).trim();
+            syntax = syntax.replace("{MESSAGE}", CWUtil.integrateColor(message, true, true)).trim();
         } else {
             if (player.hasPermission("cwchat.color")) {
-                if (!Utils.integrateColor(message, player.hasPermission("cwchat.format"), false).equals(message)) {
+                if (!CWUtil.integrateColor(message, player.hasPermission("cwchat.format"), false).equals(message)) {
                     int cdTime = 120000;
                     if (player.hasPermission("cwchat.lesscooldown")) {
                         cdTime = 60000;
@@ -107,13 +107,13 @@ public class Chat {
                     if (cwc.coloredChatCD.containsKey(player.getUniqueId())) {
                         Long time = cwc.coloredChatCD.get(player.getUniqueId());
                         if (time - System.currentTimeMillis() <= 0) {
-                            syntax = syntax.replace("{MESSAGE}", Utils.integrateColor(message, player.hasPermission("cwchat.format"), false)).trim();
+                            syntax = syntax.replace("{MESSAGE}", CWUtil.integrateColor(message, player.hasPermission("cwchat.format"), false)).trim();
                             cwc.coloredChatCD.put(player.getUniqueId(), System.currentTimeMillis() + cdTime);
                         } else {
                             syntax = syntax.replace("{MESSAGE}", message).trim();
                         }
                     } else {
-                        syntax = syntax.replace("{MESSAGE}", Utils.integrateColor(message, player.hasPermission("cwchat.format"), false)).trim();
+                        syntax = syntax.replace("{MESSAGE}", CWUtil.integrateColor(message, player.hasPermission("cwchat.format"), false)).trim();
                         cwc.coloredChatCD.put(player.getUniqueId(), System.currentTimeMillis() + cdTime);
                     }
                 } else {

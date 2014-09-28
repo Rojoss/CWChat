@@ -1,10 +1,10 @@
 package com.clashwars.cwchat.events;
 
+import com.clashwars.cwchat.Util;
 import com.massivecraft.factions.Rel;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.UPlayer;
 import com.clashwars.cwchat.CWChat;
-import com.clashwars.cwchat.util.Utils;
 import com.clashwars.cwchat.wrappers.ChatType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -134,12 +134,12 @@ public class ChatPlayerListener implements Listener {
             event.setCancelled(true);
 
             if (!player.hasPermission("cwchat.factions.chat") && !player.isOp()) {
-                player.sendMessage(Utils.formatMsg("&cInsufficient permissions!"));
+                player.sendMessage(Util.formatMsg("&cInsufficient permissions!"));
                 return;
             }
 
             if (cwc.getFactions() == null) {
-                player.sendMessage(Utils.formatMsg("&cNo factions found."));
+                player.sendMessage(Util.formatMsg("&cNo factions found."));
                 return;
             }
 
@@ -150,35 +150,35 @@ public class ChatPlayerListener implements Listener {
 
                 if (arg.equalsIgnoreCase("f") || arg.equalsIgnoreCase("fac") || arg.equalsIgnoreCase("faction")) {
                     cwc.playerChat.put(uuid, ChatType.FACTION);
-                    player.sendMessage(Utils.formatMsg("&6You are now speaking in &aFaction &6chat."));
+                    player.sendMessage(Util.formatMsg("&6You are now speaking in &aFaction &6chat."));
                     return;
                 } else if (arg.equalsIgnoreCase("a") || arg.equalsIgnoreCase("ally")) {
                     cwc.playerChat.put(uuid, ChatType.ALLY);
-                    player.sendMessage(Utils.formatMsg("&6You are now speaking in &5Ally &6chat."));
+                    player.sendMessage(Util.formatMsg("&6You are now speaking in &5Ally &6chat."));
                     return;
                 } else if (arg.equalsIgnoreCase("t") || arg.equalsIgnoreCase("truce")) {
                     cwc.playerChat.put(uuid, ChatType.TRUCE);
-                    player.sendMessage(Utils.formatMsg("&6You are now speaking in &dTruce &6chat."));
+                    player.sendMessage(Util.formatMsg("&6You are now speaking in &dTruce &6chat."));
                     return;
                 } else if (arg.equalsIgnoreCase("p") || arg.equalsIgnoreCase("public") || arg.equalsIgnoreCase("g") || arg.equalsIgnoreCase("global")) {
                     cwc.playerChat.put(uuid, ChatType.PUBLIC);
-                    player.sendMessage(Utils.formatMsg("&6You are now speaking in &7Public &6chat."));
+                    player.sendMessage(Util.formatMsg("&6You are now speaking in &7Public &6chat."));
                     return;
                 }
             }
 
             if (cwc.playerChat.get(uuid) == ChatType.FACTION) {
                 cwc.playerChat.put(uuid, ChatType.ALLY);
-                player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &5Ally &6chat."));
+                player.sendMessage(Util.formatMsg("&6You are now speaking in &5Ally &6chat."));
             } else if (cwc.playerChat.get(uuid) == ChatType.ALLY) {
                 cwc.playerChat.put(uuid, ChatType.TRUCE);
-                player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &dTruce &6chat."));
+                player.sendMessage(Util.formatMsg("&6You are now speaking in &dTruce &6chat."));
             } else if (cwc.playerChat.get(uuid) == ChatType.TRUCE) {
                 cwc.playerChat.put(uuid, ChatType.PUBLIC);
-                player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &7Public &6chat."));
+                player.sendMessage(Util.formatMsg("&6You are now speaking in &7Public &6chat."));
             } else {
                 cwc.playerChat.put(uuid, ChatType.FACTION);
-                player.sendMessage(Utils.integrateColour("&8[&4CWChat&8] &6You are now speaking in &aFaction &6chat."));
+                player.sendMessage(Util.formatMsg("&6You are now speaking in &aFaction &6chat."));
             }
         }
     }

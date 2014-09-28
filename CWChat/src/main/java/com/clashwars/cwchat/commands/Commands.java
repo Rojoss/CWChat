@@ -1,8 +1,9 @@
 package com.clashwars.cwchat.commands;
 
 import com.clashwars.cwchat.CWChat;
-import com.clashwars.cwchat.util.Utils;
+import com.clashwars.cwchat.Util;
 import com.clashwars.cwchat.wrappers.ChatType;
+import com.clashwars.cwcore.utils.CWUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -26,7 +27,7 @@ public class Commands {
 
         cwc.getPrefixConfig().load();
         cwc.getMainConfig().load();
-        sender.sendMessage(Utils.formatMsg("&6Reloaded"));
+        sender.sendMessage(Util.formatMsg("&6Reloaded"));
         return true;
     }
 
@@ -34,7 +35,7 @@ public class Commands {
     public boolean StaffChat(CommandSender sender, String label, String argument, String... args) {
         Player player = (Player) sender;
         if (!player.hasPermission("cwchat.staffchat")) {
-            player.sendMessage(Utils.integrateColour(Utils.formatMsg("&cNo permissions to use this.")));
+            player.sendMessage(CWUtil.integrateColor(Util.formatMsg("&cNo permissions to use this.")));
             return true;
         }
 
@@ -42,15 +43,15 @@ public class Commands {
         if (args.length <= 0) {
             if (cwc.playerChat.get(uuid) == ChatType.STAFF) {
                 cwc.playerChat.put(uuid, ChatType.PUBLIC);
-                player.sendMessage(Utils.formatMsg("&bStaff &6chat disabled!"));
+                player.sendMessage(Util.formatMsg("&bStaff &6chat disabled!"));
             } else {
                 cwc.playerChat.put(uuid, ChatType.STAFF);
-                player.sendMessage(Utils.formatMsg("&bStaff &6chat enabled!"));
+                player.sendMessage(Util.formatMsg("&bStaff &6chat enabled!"));
             }
         } else {
             for (Player p : cwc.getServer().getOnlinePlayers()) {
                 if (p.hasPermission("cwchat.staffchat") || p.hasPermission("cwchat.*") || p.isOp()) {
-                    p.sendMessage(cwc.getChat().formatMessage(player, ChatType.STAFF, Utils.implode(args, " ")));
+                    p.sendMessage(cwc.getChat().formatMessage(player, ChatType.STAFF, CWUtil.implode(args, " ")));
                 }
             }
         }
@@ -182,7 +183,7 @@ public class Commands {
                 String[] saliases = command.secondaryAliases();
 
                 if (!(sender instanceof Player)) {
-                    sender.sendMessage(Utils.formatMsg("&cOnly players can use this command."));
+                    sender.sendMessage(Util.formatMsg("&cOnly players can use this command."));
                     return true;
                 }
 
@@ -205,11 +206,11 @@ public class Commands {
                                             break check;
                                         }
                                     }
-                                    sender.sendMessage(Utils.formatMsg("&cinsufficient permissions! &7- &8'&4" + permissions[0] + "&8'"));
+                                    sender.sendMessage(Util.formatMsg("&cinsufficient permissions! &7- &8'&4" + permissions[0] + "&8'"));
                                     return true;
                                 }
 
-                                return (Boolean) method.invoke(this, sender, lbl, args[0], Utils.trimFirst(args));
+                                return (Boolean) method.invoke(this, sender, lbl, args[0], CWUtil.trimFirst(args));
                             }
                         }
                     }

@@ -1,7 +1,7 @@
 package com.clashwars.cwchat.config;
 
-import com.clashwars.cwchat.util.Utils;
 import com.clashwars.cwchat.wrappers.ChatPrefix;
+import com.clashwars.cwcore.utils.CWUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -68,7 +68,7 @@ public class PrefixConfig extends Config {
                 String name = ConfigUtil.getString(cfg, file, "custom-prefixes." + uuid, null);
 
                 if (name != null) {
-                    customPrefixes.put(UUID.fromString(uuid), Utils.integrateColour(name));
+                    customPrefixes.put(UUID.fromString(uuid), CWUtil.integrateColor(name));
                 }
             }
         } catch (Exception e) {

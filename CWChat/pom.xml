@@ -23,7 +23,14 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.2</version>
+            <version>1.7.10-R0.1</version>
+            <scope>compile</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit.craftbukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.7.10-R0.1</version>
             <scope>compile</scope>
             <type>jar</type>
         </dependency>
