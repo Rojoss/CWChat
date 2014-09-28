@@ -1,10 +1,8 @@
 package com.clashwars.cwchat.events;
 
-import com.clashwars.cwchat.Util;
-import com.massivecraft.factions.Rel;
-import com.massivecraft.factions.entity.Faction;
-import com.massivecraft.factions.entity.UPlayer;
 import com.clashwars.cwchat.CWChat;
+import com.clashwars.cwchat.FactionUtil;
+import com.clashwars.cwchat.Util;
 import com.clashwars.cwchat.wrappers.ChatType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,10 +12,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ChatPlayerListener implements Listener {
     private CWChat cwc;
@@ -60,40 +55,11 @@ public class ChatPlayerListener implements Listener {
                 }
             }
 
-
             //Factions chats
             if (cwc.getFactions() != null) {
-                UPlayer fPlayer = UPlayer.get(player);
-                Faction faction = fPlayer.getFaction();
-
-                if (faction != null) {
-                    //Faction chat
-                    if (ct == ChatType.FACTION || ct == ChatType.ALLY || ct == ChatType.TRUCE) {
-                        event.getRecipients().clear();
-                        event.getRecipients().addAll(faction.getOnlinePlayers());
-                    }
-
-                    //Ally & Truce chat
-                    if (ct == ChatType.ALLY || ct == ChatType.TRUCE) {
-
-                        Map<String, Rel> wishes = faction.getRelationWishes();
-
-                        for (Map.Entry<String, Rel> entry : wishes.entrySet()) {
-                            Faction thisFaction = Faction.get(entry.getKey());
-
-                            if (thisFaction == null)
-                                continue;
-
-                            Rel relation = faction.getRelationTo(thisFaction, true);
-
-                            if (relation == Rel.TRUCE && ct == ChatType.TRUCE) {
-                                event.getRecipients().addAll(thisFaction.getOnlinePlayers());
-                            } else if (relation == Rel.ALLY && (ct == ChatType.TRUCE || ct == ChatType.ALLY)) {
-                                event.getRecipients().addAll(thisFaction.getOnlinePlayers());
-                            }
-                        }
-                    }
-                }
+                Set<Player> rec = FactionUtil.setFactionRecipients(player, ct, event.getRecipients());
+                event.getRecipients().clear();
+                event.getRecipients().addAll(rec);
             }
 
             String formattedMsg = cwc.getChat().formatMessage(player, message);
@@ -102,7 +68,7 @@ public class ChatPlayerListener implements Listener {
             for (Player rec : event.getRecipients()) {
                 rec.sendMessage(formattedMsg);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

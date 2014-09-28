@@ -1,10 +1,6 @@
 package com.clashwars.cwchat;
 
 import com.clashwars.cwcore.utils.CWUtil;
-import org.bukkit.ChatColor;
-
-import java.util.Collection;
-import java.util.Random;
 
 public class Util {
 

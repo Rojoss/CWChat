@@ -1,9 +1,9 @@
 package com.clashwars.cwchat;
 
-import com.clashwars.cwchat.events.ChatPlayerListener;
 import com.clashwars.cwchat.commands.Commands;
 import com.clashwars.cwchat.config.Config;
 import com.clashwars.cwchat.config.PrefixConfig;
+import com.clashwars.cwchat.events.ChatPlayerListener;
 import com.clashwars.cwchat.wrappers.ChatType;
 import com.clashwars.cwcore.CWCore;
 import com.massivecraft.factions.Factions;
@@ -52,7 +52,7 @@ public class CWChat extends JavaPlugin {
             setEnabled(false);
             return;
         }
-        cwcore = (CWCore)plugin;
+        cwcore = (CWCore) plugin;
         factions = cwcore.GetDM().getFactions();
 
         UUID uuid;

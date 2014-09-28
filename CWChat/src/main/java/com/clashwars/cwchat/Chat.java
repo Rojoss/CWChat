@@ -1,12 +1,12 @@
 package com.clashwars.cwchat;
 
+import com.clashwars.cwchat.config.PrefixConfig;
+import com.clashwars.cwchat.wrappers.ChatPrefix;
+import com.clashwars.cwchat.wrappers.ChatType;
 import com.clashwars.cwcore.utils.CWUtil;
 import com.massivecraft.factions.Rel;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.UPlayer;
-import com.clashwars.cwchat.config.PrefixConfig;
-import com.clashwars.cwchat.wrappers.ChatPrefix;
-import com.clashwars.cwchat.wrappers.ChatType;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class Chat {
                 prefixes.add(custom);
             }
         }
-		
+
 		
 		
 		
